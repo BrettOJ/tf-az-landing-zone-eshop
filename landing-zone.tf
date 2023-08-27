@@ -5,7 +5,7 @@ locals {
   }
 
   naming_convention_info = {
-    name         = "001"
+    name         = "002"
     project_code = "boj"
     env          = "dev"
     zone         = "z1"
@@ -77,10 +77,10 @@ module "Azure_key_vault" {
     diag_object = {
     log_analytics_workspace_id = module.azure_log_analytics_workspace.loga_output.id
     log = [
-      ["AuditEvent", true, true, 0],
+      ["AuditEvent", true, 0],
     ]
     metric = [
-      ["AllMetrics", true, true, 0],
+      ["AllMetrics", true, 0],
     ]
   }
   naming_convention_info = local.naming_convention_info
@@ -287,8 +287,8 @@ module "azure_aks_service" {
 
   diag_object = {
     log_analytics_workspace_id = module.azure_log_analytics_workspace.loga_output.id
-    log                        = [["kube-audit", true, true, 0]]
-    metric                     = [["AllMetrics", true, true, 0], ]
+    log                        = [["kube-audit", true, 0], ]
+    metric                     = [["AllMetrics", true, 0], ]
   }
 
   maintenance_window = {
