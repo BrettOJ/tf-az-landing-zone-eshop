@@ -5,7 +5,7 @@ locals {
   }
 
   naming_convention_info = {
-    name         = "002"
+    name         = "006"
     project_code = "boj"
     env          = "dev"
     zone         = "z1"
@@ -76,7 +76,7 @@ module "Azure_key_vault" {
   }
     diag_object = {
     log_analytics_workspace_id = module.azure_log_analytics_workspace.loga_output.id
-    log = [
+    enabled_log = [
       ["AuditEvent", true, 0],
     ]
     metric = [
@@ -126,6 +126,7 @@ module "azure_disk_encryption_set" {
   tags                   = local.tags
   naming_convention_info = local.naming_convention_info
   tenant_id              = "e08ace22-2c12-4de6-8b26-3a5d0f62aed1"
+  depends_on = [ module.Azure_key_vault ]
 }
 
 module "azure_user_assigned_identity" {
@@ -287,7 +288,7 @@ module "azure_aks_service" {
 
   diag_object = {
     log_analytics_workspace_id = module.azure_log_analytics_workspace.loga_output.id
-    log                        = [["kube-audit", true, 0], ]
+    enabled_log                = [["kube-audit", true, 0], ]
     metric                     = [["AllMetrics", true, 0], ]
   }
 
